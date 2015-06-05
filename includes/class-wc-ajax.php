@@ -978,16 +978,27 @@ class WC_AJAX {
 	 */
 	public static function add_order_item() {
 
-		function webseo_prices($backend_prod_id){
+		function webseo_prices( $backend_prod_id ){
+
 			$pluginpath = "/home/devsitesco/public_html/wp-content/plugins/codecanyon-7104096-woo-table-based-pricing/";
 			include_once $pluginpath . 'woocommerce-price-table.php';
-			$height = $_POST['width']; //posted from ...
+			$height = $_POST['width']; //posted from html-order-items.php
 			$width = $_POST['height'];
 			
-			$prices = get_prices($width, $height, $backend_prod_id);
-			$json_string = json_encode($prices); //json encode prices
-			$obj = json_decode($json_string, true);
+			$prices = get_prices( $width, $height, $backend_prod_id );
+			$json_string = json_encode( $prices ); //json encode prices
+			$obj = json_decode( $json_string, true );
 			return $obj['product_price'];
+			/*foreach ( $obj['addon_prices'] as $taxonomy => $addons ) {
+				foreach ( $addons as $addon => $addonPrices ) {
+					foreach ( $addonPrices as $addonPrice ) {
+						if ( ( float )$addonPrice > 0 ) {
+							return $addonPrice;
+						}
+					}
+				}
+			}*/
+			
 		}
 
 		check_ajax_referer( 'order-item', 'security' );
@@ -1020,9 +1031,9 @@ class WC_AJAX {
 		$item['name']              = $_product->get_title();
 		$item['tax_class']         = $_product->get_tax_class();
 		$item['qty']               = 1;
-		$item['line_subtotal']     = webseo_prices($_product->id);
+		$item['line_subtotal']     = webseo_prices( $_product->id );
 		$item['line_subtotal_tax'] = '';
-		$item['line_total']        = webseo_prices($_product->id);
+		$item['line_total']        = webseo_prices( $_product->id );
 		$item['line_tax']          = '';
 
 		// Add line item
