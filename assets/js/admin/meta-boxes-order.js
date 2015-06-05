@@ -1027,9 +1027,7 @@ jQuery( function ( $ ) {
 							action:      'woocommerce_add_order_item',
 							item_to_add: value,
 							order_id:    woocommerce_admin_meta_boxes.post_id,
-							security:    woocommerce_admin_meta_boxes.order_item_nonce,
-							width: $('#wpti-product-x').val(),
-							height: $('#wpti-product-y').val()
+							security:    woocommerce_admin_meta_boxes.order_item_nonce
 						};
 
 						$.post( woocommerce_admin_meta_boxes.ajax_url, data, function( response ) {
@@ -1172,7 +1170,7 @@ jQuery( function ( $ ) {
 
 			return false;
 		},
-	}
+	};
 
 	/**
 	 * Order Downloads Panel
@@ -1261,7 +1259,7 @@ jQuery( function ( $ ) {
 			}
 			return false;
 		}
-	}
+	};
 
 	wc_meta_boxes_order.init();
 	wc_meta_boxes_order_items.init();

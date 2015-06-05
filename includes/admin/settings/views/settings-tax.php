@@ -43,20 +43,6 @@ return apply_filters( 'woocommerce_tax_settings', array(
 	),
 
 	array(
-		'title'    => __( 'Default Customer Address:', 'woocommerce' ),
-		'id'       => 'woocommerce_default_customer_address',
-		'desc_tip' =>  __( 'This option determines the customers default address (before they input their details).', 'woocommerce' ),
-		'default'  => 'geolocation',
-		'type'     => 'select',
-		'class'    => 'wc-enhanced-select',
-		'options'  => array(
-			''            => __( 'No address', 'woocommerce' ),
-			'base'        => __( 'Shop base address', 'woocommerce' ),
-			'geolocation' => __( 'Geolocate address', 'woocommerce' ),
-		),
-	),
-
-	array(
 		'title'    => __( 'Shipping Tax Class:', 'woocommerce' ),
 		'desc'     => __( 'Optionally control which tax class shipping gets, or leave it so shipping tax is based on the cart items themselves.', 'woocommerce' ),
 		'id'       => 'woocommerce_shipping_tax_class',
@@ -78,7 +64,7 @@ return apply_filters( 'woocommerce_tax_settings', array(
 
 	array(
 		'title'   => __( 'Additional Tax Classes', 'woocommerce' ),
-		'desc'    => __( 'List additional tax classes below (1 per line). This is in addition to the default <code>Standard Rate</code>. Tax classes can be assigned to products.', 'woocommerce' ),
+		'desc_tip'    => __( 'List additional tax classes below (1 per line). This is in addition to the default "Standard Rate".', 'woocommerce' ),
 		'id'      => 'woocommerce_tax_classes',
 		'css'     => 'width:100%; height: 65px;',
 		'type'    => 'textarea',
@@ -86,7 +72,7 @@ return apply_filters( 'woocommerce_tax_settings', array(
 	),
 
 	array(
-		'title'   => __( 'Display prices in the shop:', 'woocommerce' ),
+		'title'   => __( 'Display Prices in the Shop:', 'woocommerce' ),
 		'id'      => 'woocommerce_tax_display_shop',
 		'default' => 'excl',
 		'type'    => 'select',
@@ -98,15 +84,7 @@ return apply_filters( 'woocommerce_tax_settings', array(
 	),
 
 	array(
-		'title'   => __( 'Price display suffix:', 'woocommerce' ),
-		'id'      => 'woocommerce_price_display_suffix',
-		'default' => '',
-		'type'    => 'text',
-		'desc'    => __( 'Define text to show after your product prices. This could be, for example, "inc. Vat" to explain your pricing. You can also have prices substituted here using one of the following: <code>{price_including_tax}, {price_excluding_tax}</code>.', 'woocommerce' ),
-	),
-
-	array(
-		'title'   => __( 'Display prices during cart/checkout:', 'woocommerce' ),
+		'title'   => __( 'Display Prices During Cart and Checkout:', 'woocommerce' ),
 		'id'      => 'woocommerce_tax_display_cart',
 		'default' => 'excl',
 		'type'    => 'select',
@@ -119,7 +97,16 @@ return apply_filters( 'woocommerce_tax_settings', array(
 	),
 
 	array(
-		'title'   => __( 'Display tax totals:', 'woocommerce' ),
+		'title'       => __( 'Price Display Suffix:', 'woocommerce' ),
+		'id'          => 'woocommerce_price_display_suffix',
+		'default'     => '',
+		'placeholder' => __( 'N/A', 'woocommerce' ),
+		'type'        => 'text',
+		'desc_tip'    => __( 'Define text to show after your product prices. This could be, for example, "inc. Vat" to explain your pricing. You can also have prices substituted here using one of the following: {price_including_tax}, {price_excluding_tax}.', 'woocommerce' ),
+	),
+
+	array(
+		'title'   => __( 'Display Tax Totals:', 'woocommerce' ),
 		'id'      => 'woocommerce_tax_total_display',
 		'default' => 'itemized',
 		'type'    => 'select',

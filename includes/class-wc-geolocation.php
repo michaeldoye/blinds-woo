@@ -4,7 +4,7 @@
  *
  * Handles geolocation and updating the geolocation database.
  *
- * This product uses GeoLite2 data created by MaxMind, available from http://www.maxmind.com
+ * This product includes GeoLite data created by MaxMind, available from http://www.maxmind.com.
  *
  * @author   WooThemes
  * @category Admin
@@ -45,8 +45,24 @@ class WC_Geolocation {
 	 * Hook in tabs.
 	 */
 	public static function init() {
-		add_action( 'woocommerce_geoip_updater', array( __CLASS__, 'update_database' ) );
-		add_action( 'woocommerce_installed', array( __CLASS__, 'update_database' ) );
+		// Only download the database from MaxMind if the geolocation function is enabled, or a plugin specifically requests it
+		if ( 'geolocation' === get_option( 'woocommerce_default_customer_address' ) || apply_filters( 'woocommerce_geolocation_update_database_periodically', false ) ) {
+			add_action( 'woocommerce_geoip_updater', array( __CLASS__, 'update_database' ) );
+		}
+		add_filter( 'pre_update_option_woocommerce_default_customer_address', array( __CLASS__, 'maybe_update_database' ), 10, 2 );
+	}
+
+	/**
+	 * Maybe trigger a DB update for the first time
+	 * @param  string $new_value
+	 * @param  string $old_value
+	 * @return string
+	 */
+	public static function maybe_update_database( $new_value, $old_value ) {
+		if ( $new_value !== $old_value && 'geolocation' === $new_value ) {
+			self::update_database();
+		}
+		return $new_value;
 	}
 
 	/**
@@ -82,7 +98,7 @@ class WC_Geolocation {
 
 			foreach ( $ip_lookup_services_keys as $service_name ) {
 				$service_endpoint = $ip_lookup_services[ $service_name ];
-				$response         = wp_remote_get( $service_endpoint, array( 'timeout' => 2 ) );
+				$response         = wp_safe_remote_get( $service_endpoint, array( 'timeout' => 2 ) );
 
 				if ( ! is_wp_error( $response ) && $response['body'] ) {
 					$external_ip_address = apply_filters( 'woocommerce_geolocation_ip_lookup_api_response', wc_clean( $response['body'] ), $service_name );
@@ -203,7 +219,7 @@ class WC_Geolocation {
 
 			foreach ( $geoip_services_keys as $service_name ) {
 				$service_endpoint = $geoip_services[ $service_name ];
-				$response         = wp_remote_get( sprintf( $service_endpoint, $ip_address ), array( 'timeout' => 2 ) );
+				$response         = wp_safe_remote_get( sprintf( $service_endpoint, $ip_address ), array( 'timeout' => 2 ) );
 
 				if ( ! is_wp_error( $response ) && $response['body'] ) {
 					switch ( $service_name ) {

@@ -300,11 +300,9 @@ if ( wc_tax_enabled() ) {
 					<a class="modal-close modal-close-link" href="#"><span class="close-icon"><span class="screen-reader-text">Close media panel</span></span></a>
 					<h1><?php _e( 'Add products', 'woocommerce' ); ?></h1>
 				</header>
-				<article style="min-height:100px;">
+				<article>
 					<form action="" method="post">
 						<input type="hidden" id="add_item_id" name="add_order_items" class="wc-product-search" style="width: 100%;" data-placeholder="<?php _e( 'Search for a product&hellip;', 'woocommerce' ); ?>" data-multiple="true" />
-						<input name="wpti_x" placeholder="Width" class="wpti-product-size" id="wpti-product-x" type="number">
-						<input name="wpti_y" placeholder="Height" class="wpti-product-size" id="wpti-product-y" type="number">
 					</form>
 				</article>
 				<footer>

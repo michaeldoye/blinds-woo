@@ -113,7 +113,6 @@
 				if ( data.hasOwnProperty( item.name ) ) {
 					data[ item.name ] = $.makeArray( data[ item.name ] );
 					data[ item.name ].push( item.value );
-					console.log('fuck'+ data);
 				}
 				else {
 					data[ item.name ] = item.value;
